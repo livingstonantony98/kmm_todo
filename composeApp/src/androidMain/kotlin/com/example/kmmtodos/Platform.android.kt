@@ -7,6 +7,3 @@ class AndroidPlatform : Platform {
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
-actual fun getNativeResponse(input: Int): Int {
-    return input +100
-}
