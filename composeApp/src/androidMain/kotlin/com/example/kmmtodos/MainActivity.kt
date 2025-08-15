@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kmmtodos.data.model.Todo
 import com.example.kmmtodos.ui.widgets.ErrorContent
+import com.example.kmmtodos.ui.widgets.TodoAppScreen
 import com.example.kmmtodos.ui.widgets.TodoItem
 import com.example.kmmtodos.ui.widgets.TodoListContent
 
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            TodoAppScreen()
         }
     }
 }

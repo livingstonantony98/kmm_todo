@@ -29,7 +29,7 @@ class MyViewmodel(val todoRepository: TodoRepository) : ViewModel() {
     private val _todos = MutableStateFlow<UiState<List<Todo>>>(UiState.Loading)
 //    val todos: StateFlow<UiState<List<Todo>>> = _todos.asStateFlow() // Ex
 
-    val todos = _todos.onStart {
+    val todos: StateFlow<UiState<List<Todo>>> = _todos.onStart {
         fetchBookDescription()
     }
         .stateIn(

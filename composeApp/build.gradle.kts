@@ -58,6 +58,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             api(libs.koin.core)
 //            implementation("io.github.aakira:napier:1.4.1")
+            implementation(libs.kotlinx.coroutines.core)
         }
 
         nativeMain.dependencies {

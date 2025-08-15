@@ -47,7 +47,7 @@ fun TodoAppScreen(viewModel: MyViewmodel = koinViewModel()) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Todo List (Compose)") },
+                title = { Text("Todo List (Android)") },
             )
         }
     ) { paddingValues ->
