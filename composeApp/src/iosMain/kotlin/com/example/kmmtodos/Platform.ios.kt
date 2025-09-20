@@ -8,9 +8,6 @@ class IOSPlatform : Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
-actual fun getNativeResponse(input: Int): Int {
-    return input + 10
-}
 
 interface NativeResponseProvider {
     fun getNativeResponse(input: Int): Int
