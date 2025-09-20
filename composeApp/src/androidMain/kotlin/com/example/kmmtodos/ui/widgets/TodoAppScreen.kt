@@ -2,7 +2,6 @@
 
 package com.example.kmmtodos.ui.widgets
 
-import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,18 +28,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.kmmtodos.data.model.Todo
-import com.example.kmmtodos.ui.MyViewmodel
-import com.example.kmmtodos.ui.UiState
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kmmtodos.LocalAppContainer
+import com.example.shared.data.model.Todo
+import com.example.shared.ui.MyViewmodel
+import com.example.shared.ui.UiState
 
 @Composable
-fun TodoAppScreen(viewModel: MyViewmodel = koinViewModel()) {
+fun TodoAppScreen(
+    viewModel: MyViewmodel = viewModel(
+        factory = LocalAppContainer.current.todoViewModelFactory,
+    )
+) {
 
     val uiState by viewModel.todos.collectAsState()
 
@@ -58,12 +62,12 @@ fun TodoAppScreen(viewModel: MyViewmodel = koinViewModel()) {
             contentAlignment = Alignment.Center
         ) {
 
-         /* if (state.isEmpty()){
-              Text("No todos found. Add Some!",
-                  modifier = Modifier.align(Alignment.Center))
-          }else{
-              TodoListContent(todos = state)
-          }*/
+            /* if (state.isEmpty()){
+                 Text("No todos found. Add Some!",
+                     modifier = Modifier.align(Alignment.Center))
+             }else{
+                 TodoListContent(todos = state)
+             }*/
 
 
             when (val currentSate = uiState) {
@@ -79,10 +83,12 @@ fun TodoAppScreen(viewModel: MyViewmodel = koinViewModel()) {
 
                 is UiState.Success -> {
                     val todos = currentSate.data
-                    if (todos.isEmpty()){
-                        Text("No todos found. Add Some!",
-                        modifier = Modifier.align(Alignment.Center))
-                    }else{
+                    if (todos.isEmpty()) {
+                        Text(
+                            "No todos found. Add Some!",
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    } else {
                         TodoListContent(todos = todos)
                     }
 

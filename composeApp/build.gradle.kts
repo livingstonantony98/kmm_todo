@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -25,6 +26,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
+            export(libs.androidx.lifecycle.viewmodel)
             baseName = "ComposeApp"
             isStatic = true
         }
@@ -48,17 +50,19 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
+//            implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
 
             implementation(libs.bundles.ktor)
 
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
-            api(libs.koin.core)
 //            implementation("io.github.aakira:napier:1.4.1")
             implementation(libs.kotlinx.coroutines.core)
+
+            api(libs.androidx.lifecycle.viewmodel)
+//            implementation(libs.androidx.lifecycle.viewmodel.compose)
+//            implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+            implementation(projects.shared)
         }
 
         nativeMain.dependencies {

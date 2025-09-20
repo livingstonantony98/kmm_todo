@@ -11,15 +11,16 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.kmmtodos.data.model.Todo
 import com.example.kmmtodos.ui.widgets.ErrorContent
 import com.example.kmmtodos.ui.widgets.TodoAppScreen
 import com.example.kmmtodos.ui.widgets.TodoItem
 import com.example.kmmtodos.ui.widgets.TodoListContent
+import com.example.shared.data.model.Todo
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            TodoAppScreen()
+            CompositionLocalProvider(
+                LocalAppContainer provides (this.applicationContext as MyApplication).container,
+            ) {
+                TodoAppScreen()
+
+            }
         }
     }
 }
@@ -37,7 +43,6 @@ class MainActivity : ComponentActivity() {
 fun AppAndroidPreview() {
     App()
 }
-
 
 
 @Preview(showBackground = true, name = "Todo Item Preview (Pending)")
@@ -62,7 +67,12 @@ fun TodoListContentPreview() {
     MaterialTheme {
         TodoListContent(
             todos = listOf(
-                Todo(1, 1, "First item - very long title to see how it wraps around the screen", false),
+                Todo(
+                    1,
+                    1,
+                    "First item - very long title to see how it wraps around the screen",
+                    false
+                ),
                 Todo(2, 1, "Second item", true),
                 Todo(3, 2, "Third item", false)
             )

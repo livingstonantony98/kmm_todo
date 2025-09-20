@@ -27,5 +27,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
+rootProject.name = "KMMTodos"
 include(":composeApp")
+include(":shared")

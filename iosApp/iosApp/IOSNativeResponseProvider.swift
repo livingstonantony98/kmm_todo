@@ -3,6 +3,7 @@
 //
 
 import ComposeApp
+import shared
 
 class IOSNativeResponseProvider: NativeResponseProvider {
 

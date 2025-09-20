@@ -1,12 +1,28 @@
 import SwiftUI
+import Foundation
+import ComposeApp
+import shared
 
 
 @main
 struct iOSApp: App {
 
+    let appContainer: ObservableValueWrapper<AppContainer>
+
+    init() {
+        self.appContainer = ObservableValueWrapper<AppContainer>(
+            value: AppContainer()
+        )
+    }
+    
     var body: some Scene {
         WindowGroup {
-            HelloView()
+            
+            ViewModelStoreOwnerProvider {
+                TodoAppScreenView()
+            }
+            .environmentObject(appContainer)
+           
         }
     }
 }
