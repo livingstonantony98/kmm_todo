@@ -38,11 +38,12 @@ import com.example.kmmtodos.LocalAppContainer
 import com.example.shared.data.model.Todo
 import com.example.shared.ui.MyViewmodel
 import com.example.shared.ui.UiState
+import com.example.shared.ui.creationExtras
 
 @Composable
 fun TodoAppScreen(
     viewModel: MyViewmodel = viewModel(
-        factory = LocalAppContainer.current.todoViewModelFactory,
+        factory = LocalAppContainer.current.todoViewModelFactory
     )
 ) {
 

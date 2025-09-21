@@ -9,4 +9,27 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.android.kotlin.multiplatform.library) apply false
     alias(libs.plugins.android.lint) apply false
+    alias(libs.plugins.spotless) apply false
+
+    alias(libs.plugins.kotlinAndroid) apply false
+
+    alias(libs.plugins.skie)
+    alias(libs.plugins.ksp)
+}
+
+subprojects {
+    apply(plugin = "com.diffplug.spotless")
+    configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+        kotlin {
+            target("**/*.kt")
+            targetExclude("${layout.buildDirectory}/**/*.kt")
+
+            ktlint()
+        }
+
+        kotlinGradle {
+            target("*.gradle.kts")
+            ktlint()
+        }
+    }
 }
