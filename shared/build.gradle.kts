@@ -103,3 +103,13 @@ kotlin {
     }
 
 }
+skie {
+    features {
+        // https://skie.touchlab.co/features/flows-in-swiftui
+        enableSwiftUIObservingPreview = true
+    }
+
+    analytics {
+        enabled.set(false)
+    }
+}
