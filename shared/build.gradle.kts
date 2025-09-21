@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.android.lint)
 
     alias(libs.plugins.kotlin.serialization)
+
+    alias(libs.plugins.skie)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -41,8 +44,8 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
-            export(libs.androidx.lifecycle.viewmodel)
             baseName = "shared"
+            export(libs.androidx.lifecycle.viewmodel)
         }
     }
 

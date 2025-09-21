@@ -7,10 +7,8 @@ import com.example.shared.domain.onError
 import com.example.shared.domain.onSuccess
 import com.example.shared.repository.TodoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
@@ -23,32 +21,36 @@ sealed interface UiState<out T> {
 
 class MyViewmodel(val todoRepository: TodoRepository) : ViewModel() {
 
+    private val _uiState = MutableStateFlow<UiState<List<Todo>>>(UiState.Loading)
+    val uiState: StateFlow<UiState<List<Todo>>> = _uiState.asStateFlow()
 
-    private val _state = MutableStateFlow(emptyList<Todo>())
-    private val _todos = MutableStateFlow<UiState<List<Todo>>>(UiState.Loading)
-//    val todos: StateFlow<UiState<List<Todo>>> = _todos.asStateFlow() // Ex
-
-    val todos: StateFlow<UiState<List<Todo>>> = _todos.onStart {
-        fetchBookDescription()
+    init {
+        // Fetch data immediately when the ViewModel is created.
+        fetchTodos()
     }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
-            _todos.value
-        )
+    private fun fetchTodos() {
+        // Set the state to Loading before starting the coroutine.
+        _uiState.value = UiState.Loading
 
-    private fun fetchBookDescription() {
-        _todos.value = UiState.Loading
         viewModelScope.launch {
-            todoRepository.getTodos()
-                .onSuccess { data ->
-                    _todos.value = UiState.Success(data)
-                    _state.value = data
-                    print("MyViewmodel:DATA: $data")
-                }.onError { e ->
-                    print("MyViewmodel:ERROR: $e")
-                    _todos.value = UiState.Error(e.toString())
-                }
+            try {
+                // Call the repository and handle the result.
+                todoRepository.getTodos()
+                    .onSuccess { data ->
+                        // Update the state to Success with the received data.
+                        _uiState.value = UiState.Success(data)
+                        println("MyViewmodel: DATA: $data")
+                    }
+                    .onError { e ->
+                        // Update the state to Error if an exception occurs.
+                        _uiState.value = UiState.Error(e.toString())
+                        println("MyViewmodel: ERROR: $e")
+                    }
+            } catch (e: Exception) {
+                // Catch any other exceptions that might occur.
+                _uiState.value = UiState.Error(e.toString())
+                println("MyViewmodel: CATCH ERROR: $e")
+            }
         }
     }
 }

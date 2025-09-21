@@ -1,7 +1,5 @@
 import SwiftUI
 import shared
-import Foundation
-
 
 /// A ViewModelStoreOwner specifically for iOS to be an ObservableObject.
 class IOSViewModelStoreOwner: ObservableObject, ViewModelStoreOwner {
@@ -10,13 +8,16 @@ class IOSViewModelStoreOwner: ObservableObject, ViewModelStoreOwner {
 
     /// This function allows retrieving the androidx ViewModel from the store.
     func viewModel<T: ViewModel>(
+        key: String? = nil,
         factory: ViewModelProviderFactory,
+        extras: CreationExtras? = nil
     ) -> T {
         do {
-            return try viewModelStore.resolveViewModel(
+            return try viewModel(
                 modelClass: T.self,
                 factory: factory,
-                extras: nil
+                key: key,
+                extras: extras
             ) as! T
         } catch {
             fatalError("Failed to create ViewModel of type \(T.self)")

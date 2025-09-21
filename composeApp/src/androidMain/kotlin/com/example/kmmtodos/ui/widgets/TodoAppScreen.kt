@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,72 +45,58 @@ import com.example.shared.ui.creationExtras
 
 @Composable
 fun TodoAppScreen(
+    // Your ViewModel injection method remains the same.
     viewModel: MyViewmodel = viewModel(
         factory = LocalAppContainer.current.todoViewModelFactory
     )
 ) {
-
-    val uiState by viewModel.todos.collectAsState()
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Todo List (Android)") },
-            )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center
-        ) {
-
-            /* if (state.isEmpty()){
-                 Text("No todos found. Add Some!",
-                     modifier = Modifier.align(Alignment.Center))
-             }else{
-                 TodoListContent(todos = state)
-             }*/
+    // Corrected to use the new `uiState` property from the ViewModel.
+    val uiState by viewModel.uiState.collectAsState()
 
 
-            when (val currentSate = uiState) {
-                is UiState.Loading -> {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+    Box(
+        modifier = Modifier
+            .safeContentPadding()
+
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        when (val currentState = uiState) {
+            is UiState.Loading -> {
+                Column(
+                    modifier = Modifier.align(Alignment.Center),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
                     Text(
                         "Loading todos...",
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(top = 60.dp) // Offset from progress indicator
+                        modifier = Modifier.padding(top = 16.dp)
                     )
-                }
-
-                is UiState.Success -> {
-                    val todos = currentSate.data
-                    if (todos.isEmpty()) {
-                        Text(
-                            "No todos found. Add Some!",
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    } else {
-                        TodoListContent(todos = todos)
-                    }
-
-                }
-
-                is UiState.Error -> {
-                    ErrorContent(message = currentSate.message)
                 }
             }
 
+            is UiState.Success -> {
+                val todos = currentState.data
+                if (todos.isEmpty()) {
+                    Text(
+                        "No todos found. Add Some!",
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                } else {
+                    // Pass the list to your content Composable.
+                    TodoListContent(todos = todos, modifier = Modifier.fillMaxSize())
+                }
+            }
+
+            is UiState.Error -> {
+                ErrorContent(message = currentState.message)
+            }
         }
     }
 }
 
-
 @Composable
 fun TodoListContent(todos: List<Todo>, modifier: Modifier = Modifier) {
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -117,14 +106,10 @@ fun TodoListContent(todos: List<Todo>, modifier: Modifier = Modifier) {
         items(
             items = todos,
             key = { todo -> todo.id }
-
         ) { todo ->
-
             TodoItem(todo = todo)
-//            HorizontalDivider()
         }
     }
-
 }
 
 @Composable
