@@ -15,7 +15,7 @@ struct TodoAppScreenView: View {
     // Use @ObservedObject if the ViewModel is created and managed by a parent and passed in.
     //    @StateObject private var viewModel: MyViewModel = MyViewModel()
     
-    @EnvironmentObject var viewModelStoreOwner: IOSViewModelStoreOwner
+    @StateObject var viewModelStoreOwner = IOSViewModelStoreOwner()
     @EnvironmentObject var appContainer: ObservableValueWrapper<AppContainer>
     
     var body: some View {

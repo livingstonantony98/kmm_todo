@@ -38,9 +38,9 @@ kotlin {
             implementation(libs.androidx.activity.compose)
 
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-            implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose)
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -49,8 +49,6 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
-
 
             implementation(libs.bundles.ktor)
 

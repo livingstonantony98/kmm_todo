@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,10 +21,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,18 +32,16 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kmmtodos.LocalAppContainer
 import com.example.shared.data.model.Todo
 import com.example.shared.ui.MyViewmodel
 import com.example.shared.ui.UiState
-import com.example.shared.ui.creationExtras
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun TodoAppScreen(
     // Your ViewModel injection method remains the same.
     viewModel: MyViewmodel = viewModel(
-        factory = LocalAppContainer.current.todoViewModelFactory
+        factory = LocalAppContainer.current.todoViewModelFactory,
     )
 ) {
     // Corrected to use the new `uiState` property from the ViewModel.

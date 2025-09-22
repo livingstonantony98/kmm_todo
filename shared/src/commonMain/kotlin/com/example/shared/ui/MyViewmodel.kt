@@ -28,6 +28,10 @@ class MyViewmodel(val todoRepository: TodoRepository) : ViewModel() {
         // Fetch data immediately when the ViewModel is created.
         fetchTodos()
     }
+
+    override fun onCleared() {
+        super.onCleared()
+    }
     private fun fetchTodos() {
         // Set the state to Loading before starting the coroutine.
         _uiState.value = UiState.Loading
