@@ -67,3 +67,5 @@ composeApp/
 ## Learn More
 
 - [Kotlin Multiplatform Documentation](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)
+
+<img src="https://github.com/livingstonantony98/kmm_todo/blob/main/img.png"  width="300">
