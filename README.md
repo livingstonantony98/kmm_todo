@@ -1,14 +1,69 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# KMMTodos
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+KMMTodos is a cross-platform Todo application built using Kotlin Multiplatform. It targets both Android and iOS, sharing business logic and UI code where possible to maximize code reuse and maintainability.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Project Structure
 
+- **/composeApp**  
+  Shared code for Compose Multiplatform applications.
+  - `commonMain`: Code common to all platforms (business logic, models, etc.).
+  - `androidMain`, `iosMain`: Platform-specific implementations (e.g., Android or iOS APIs).
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+- **/iosApp**  
+  Contains the iOS application entry point and SwiftUI code. This is required even if most UI is shared via Compose Multiplatform.
+
+## Class/File Tree Structure
+
+```
+composeApp/
+  src/
+    androidMain/
+      kotlin/com/example/kmmtodos/
+        MainActivity.kt
+        MyApplication.kt
+        Platform.android.kt
+        di/Modules.android.kt
+    commonMain/
+      kotlin/com/example/kmmtodos/
+        App.kt
+        Greeting.kt
+        Platform.kt
+        data/
+          HttpClientExt.kt
+          HttpClientFactory.kt
+          model/
+            Todo.kt
+            TodoDTO.kt
+        domain/
+          Result.kt
+        networking/
+          CensoredText.kt
+          KtorRemoteBookDataSource.kt
+          RemoteBookDataSource.kt
+          createHttpClient.kt
+    iosMain/
+      kotlin/com/example/kmmtodos/
+        MainViewController.kt
+        Platform.ios.kt
+        di/Modules.ios.kt
+    commonTest/
+      kotlin/com/example/kmmtodos/
+        ComposeAppCommonTest.kt
+```
+
+## Features
+
+- Add, edit, and delete todo items.
+- Shared business logic across Android and iOS.
+- Compose Multiplatform UI for a consistent look and feel.
+
+## Getting Started
+
+1. Clone the repository.
+2. Open the project in Android Studio or IntelliJ IDEA.
+3. For Android: Run the `composeApp` target.
+4. For iOS: Open `iosApp/iosApp.xcodeproj` in Xcode and run on a simulator or device.
+
+## Learn More
+
+- [Kotlin Multiplatform Documentation](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)
