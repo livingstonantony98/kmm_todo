@@ -69,3 +69,6 @@ composeApp/
 - [Kotlin Multiplatform Documentation](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)
 
 <img src="https://github.com/livingstonantony98/kmm_todo/blob/main/img.png"  width="300">
+
+
+inspired by: https://github.com/android/kotlin-multiplatform-samples/tree/main/Fruitties
