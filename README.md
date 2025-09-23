@@ -71,4 +71,4 @@ composeApp/
 <img src="https://github.com/livingstonantony98/kmm_todo/blob/main/img.png"  width="300">
 
 
-inspired by: https://github.com/android/kotlin-multiplatform-samples/tree/main/Fruitties
+inspired by: https://developer.android.com/kotlin/multiplatform/viewmodel
